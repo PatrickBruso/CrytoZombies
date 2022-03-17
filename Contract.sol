@@ -28,6 +28,7 @@ contract ZombieFactory {
         // Set mappings for zombie owner and zombie count
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;
+        // Call NewZombie event
         emit NewZombie(id, _name, _dna);
     }
 
