@@ -18,6 +18,10 @@ contract ZombieFactory {
     // Create dynamic array of Zombie structs called zombies
     Zombie[] public zombies;
 
+    // Create mappings for zombie owners and zombie counts
+    mapping (uint => address) public zombieToOwner;
+    mapping (address => uint) ownerZombieCount;
+
     // Function that adds new Zombie to array of structs and emits NewZombie event
     function _createZombie(string memory _name, uint _dna) private {
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
