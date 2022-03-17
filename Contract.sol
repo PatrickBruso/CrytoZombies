@@ -25,6 +25,9 @@ contract ZombieFactory {
     // Function that adds new Zombie to array of structs and emits NewZombie event
     function _createZombie(string memory _name, uint _dna) private {
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
+        // Set mappings for zombie owner and zombie count
+        zombieToOwner[id] = msg.sender;
+        ownerZombieCount[msg.sender]++;
         emit NewZombie(id, _name, _dna);
     }
 
