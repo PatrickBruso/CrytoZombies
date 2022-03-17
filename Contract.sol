@@ -40,7 +40,11 @@ contract ZombieFactory {
 
     // Function that creates a random Zombie by generating that Zombe's dna and calling _createZombie function
     function createRandomZombie(string memory _name) public {
+        // Check to make sure sender has not previously created zombie
+        require(ownerZombieCount[msg.sender] == 0);
+        // Generate random dna for zombie creation
         uint randDna = _generateRandomDna(_name);
+        // Create zombie
         _createZombie(_name, randDna);
     }
 
