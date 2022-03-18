@@ -19,6 +19,12 @@ contract KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
+
+    // Variable for CryptoKitties smart contract address
+    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
+
+    // Initialize kittyContract using interface and ckAddress
+    KittyInterface kittyContract = KittyInterface(ckAddress);
     
     // Create function to feed and multiply zombies
     function feedAndMultiply(uint _zombieId, uint _targetDna) public view {
