@@ -23,7 +23,7 @@ contract ZombieFactory {
     mapping (address => uint) ownerZombieCount;
 
     // Function that adds new Zombie to array of structs and emits NewZombie event
-    function _createZombie(string memory _name, uint _dna) private {
+    function createZombie(string memory _name, uint _dna) internal {
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
         // Set mappings for zombie owner and zombie count
         zombieToOwner[id] = msg.sender;
@@ -45,7 +45,7 @@ contract ZombieFactory {
         // Generate random dna for zombie creation
         uint randDna = _generateRandomDna(_name);
         // Create zombie
-        _createZombie(_name, randDna);
+        createZombie(_name, randDna);
     }
 
 }
