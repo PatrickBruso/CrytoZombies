@@ -44,4 +44,11 @@ contract ZombieFeeding is ZombieFactory {
         // Call createZombie function with new dna parameters and no name
         createZombie("NoName", newDna);
     }
+
+    // Create function to obtain kitty dna from kittyContract and pass it to feedAndMultiply function
+    function feedOnKitty(uint _zombieId, uint _kittyId) public view {
+        uint kittyDna;
+        (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
+        feedAndMultiply(_zombieId, kittyDna);
+    }
 }
