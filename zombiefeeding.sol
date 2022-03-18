@@ -27,7 +27,7 @@ contract ZombieFeeding is ZombieFactory {
     KittyInterface kittyContract = KittyInterface(ckAddress);
     
     // Create function to feed and multiply zombies
-    function feedAndMultiply(uint _zombieId, uint _targetDna) public view {
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public view {
 
         // Use require to make sure msg.sender owns this zombie to feed
         require(msg.sender == zombieToOwner[_zombieId]);
@@ -41,6 +41,11 @@ contract ZombieFeeding is ZombieFactory {
         // Create new dna variable to hold average of zombie dna and target dna
         uint newDna = (myZombie.dna + _targetDna) / 2;
 
+        // If statement to check whether dna comes from kitty
+        if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
+            newDna = newDna - newDna % 100 + 99;
+        }
+
         // Call createZombie function with new dna parameters and no name
         createZombie("NoName", newDna);
     }
@@ -49,6 +54,6 @@ contract ZombieFeeding is ZombieFactory {
     function feedOnKitty(uint _zombieId, uint _kittyId) public view {
         uint kittyDna;
         (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
-        feedAndMultiply(_zombieId, kittyDna);
+        feedAndMultiply(_zombieId, kittyDna, "kitty");
     }
 }
