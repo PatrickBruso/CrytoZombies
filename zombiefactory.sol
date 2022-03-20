@@ -10,6 +10,7 @@ contract ZombieFactory is Ownable {
     // Declare variables for determining zombie dna
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
+    uint cooldownTime = 1 days;
 
     // Zombie struct to create new zombies
     struct Zombie {
@@ -28,7 +29,7 @@ contract ZombieFactory is Ownable {
 
     // Function that adds new Zombie to array of structs and emits NewZombie event
     function createZombie(string memory _name, uint _dna) internal {
-        uint id = zombies.push(Zombie(_name, _dna)) - 1;
+        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1;
         // Set mappings for zombie owner and zombie count
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;
